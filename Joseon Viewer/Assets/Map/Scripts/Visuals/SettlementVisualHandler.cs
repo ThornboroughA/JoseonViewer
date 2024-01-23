@@ -29,8 +29,13 @@ public class SettlementVisualHandler: MonoBehaviour
         foreach (Vector3 location in buildingLocs) 
         {
             // add randomization functionality within settlementBuildings
-            GameObject building = Instantiate(settlementBuildings.visuals[0]);
-            building.transform.position = location;
+            float randomYRotation = Random.Range(0f, 360f);
+            Quaternion randomRot = Quaternion.Euler(0, randomYRotation, 0);
+
+            GameObject building = Instantiate(settlementBuildings.visuals[0], location, randomRot);
+            
+            SetVerticalHeight(building.transform);
+
             building.transform.parent = gameObject.transform;
         }
     }
@@ -38,12 +43,35 @@ public class SettlementVisualHandler: MonoBehaviour
     {
         if (population <= 0)
         {
-            Debug.Log($"Population of {population} is invalid. Defaulting to 1.");
+            Debug.LogWarning($"Population of {population} is invalid. Defaulting to 1.");
             population = 1;
         }
 
         int density = Mathf.RoundToInt( population * 0.1f);
         return density;
+    }
+
+
+    private void SetVerticalHeight(Transform objTrans)
+    {
+        Debug.Log($"original position is + {objTrans.position}");
+
+        RaycastHit hit;
+        if (Physics.Raycast(objTrans.position + Vector3.up * 100, Vector3.down, out hit))
+        {
+            Debug.Log($"raycast hit! at {hit}");
+
+
+            Vector3 position = objTrans.position;
+
+            Debug.Log(position);
+            position.y = hit.point.y;
+            objTrans.position = position;
+            Debug.Log(position);
+        } else
+        {
+            Debug.Log($"No ground detected below {objTrans.name}");
+        }
     }
 
 }

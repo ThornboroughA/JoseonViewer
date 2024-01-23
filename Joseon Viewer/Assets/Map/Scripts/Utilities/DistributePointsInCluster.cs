@@ -12,39 +12,41 @@ public static class DistributePointsInCluster
         return new Vector3(distance * Mathf.Cos(angle), 0, distance * Mathf.Sin(angle)) + centralPoint;
     }
 
-    public static Vector3[] GenerateClustersAroundPoint(int totalPoints, Vector3 centralPoint, float clusterRadius, float isolatedPointRadius, int pointsPerCluster, float clusterSpreadRadius)
+    public static Vector3[] GenerateClustersAroundPoint(int totalPoints, Vector3 centralPoint, float baseClusterRadius, float baseIsolatedPointRadius, int pointsPerCluster, float clusterSpreadRadius)
     {
+        int numClusters = totalPoints / pointsPerCluster;
 
-        int numberOfClusters = totalPoints / pointsPerCluster;
-        clusterRadius = (clusterRadius * (totalPoints * 0.01f + 1));
-        Debug.Log(clusterRadius);
-
-        Vector3[] clusterCenters = new Vector3[numberOfClusters];
+        Vector3[] clusterCenters = new Vector3[numClusters];
         // Generate cluster centers around the main central point
-        for (int i = 0; i < numberOfClusters; i++)
+        for (int i = 0; i < numClusters; i++)
         {
             clusterCenters[i] = GenerateRandomPoint(centralPoint, clusterSpreadRadius);
         }
 
         // Generate points for each cluster
-        Vector3[] points = new Vector3[numberOfClusters * pointsPerCluster];
-        for (int i = 0; i < numberOfClusters; i++)
+        Vector3[] points = new Vector3[totalPoints];
+        for (int i = 0; i < numClusters; i++)
         {
+            // Dynamic adjustment of the radii based on points per cluster
+            float dynamicClusterRadius = baseClusterRadius * Mathf.Sqrt(pointsPerCluster);
+            float dynamicIsolatedPointRadius = baseIsolatedPointRadius * Mathf.Sqrt(pointsPerCluster);
+
             for (int j = 0; j < pointsPerCluster; j++)
             {
                 int pointIndex = i * pointsPerCluster + j;
                 // Occasionally generate an isolated point
                 if (random.NextDouble() > 0.9) // 10% chance
                 {
-                    points[pointIndex] = GenerateRandomPoint(clusterCenters[i], isolatedPointRadius);
+                    points[pointIndex] = GenerateRandomPoint(clusterCenters[i], dynamicIsolatedPointRadius);
                 }
                 else
                 {
-                    points[pointIndex] = GenerateRandomPoint(clusterCenters[i], clusterRadius);
+                    points[pointIndex] = GenerateRandomPoint(clusterCenters[i], dynamicClusterRadius);
                 }
             }
         }
 
         return points;
     }
+
 }
