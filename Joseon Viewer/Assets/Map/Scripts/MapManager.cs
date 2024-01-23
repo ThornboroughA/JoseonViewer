@@ -9,26 +9,24 @@ using UnityEngine;
 
 public class MapManager : MonoBehaviour
 {
-    public List<SettlementData> settlements; 
-    public GameObject settlementPrefab;
+    [Tooltip("A list of all the settlement GameObjects in the scene. Populated on play.")]
+    public List<GameObject> settlements; 
+    
 
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-        InstanceSettlements();
+        GetSettlements();
     }
 
 
-    private void InstanceSettlements()
+    private void GetSettlements()
     {
-
-        foreach (SettlementData data in settlements)
+        SettlementInstance[] data = FindObjectsOfType<SettlementInstance>();
+        foreach (SettlementInstance datum in data)
         {
-            GameObject obj = Instantiate(settlementPrefab);
-            SettlementInstance objDat = obj.GetComponent<SettlementInstance>();
-            objDat.Initialize(data);
-            
+            settlements.Add(datum.gameObject);
         }
 
     }

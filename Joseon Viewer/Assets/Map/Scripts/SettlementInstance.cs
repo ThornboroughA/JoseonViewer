@@ -11,14 +11,29 @@ public class SettlementInstance : MonoBehaviour
 {
     public SettlementData settlementData;
 
-    public string name;
-    public int population;
+    [HideInInspector] public string name;
+    [HideInInspector] public int population;
+
+
+    private void Start()
+    {
+        Initialize(settlementData);
+    }
 
     public void Initialize(SettlementData data)
     {
+        if (data == null)
+        {
+            Debug.LogWarning("SettlementData for " + this.name + " reads as null.");
+            return;
+        }
+
         settlementData = data;
         name = settlementData.name;
         population = settlementData.population;
+
+        string nameStart = "Settlement: ";
+        gameObject.name = nameStart + name;
     }
 
 
