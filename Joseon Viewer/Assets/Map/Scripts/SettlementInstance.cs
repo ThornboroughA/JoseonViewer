@@ -7,6 +7,7 @@ using UnityEngine;
 ///  This class handles the settlement data, visuals etc as handled on the map.
 /// </summary>
 
+[RequireComponent(typeof(SettlementVisualHandler))]
 public class SettlementInstance : MonoBehaviour
 {
     public SettlementData settlementData;
@@ -18,6 +19,8 @@ public class SettlementInstance : MonoBehaviour
     private void Start()
     {
         Initialize(settlementData);
+
+        InitializeVisuals();
     }
 
     public void Initialize(SettlementData data)
@@ -36,6 +39,10 @@ public class SettlementInstance : MonoBehaviour
         gameObject.name = nameStart + name;
     }
 
+    private void InitializeVisuals()
+    {
+        GetComponent<SettlementVisualHandler>().GenerateBuildings(population);
+    }
 
 
 }
