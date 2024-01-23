@@ -32,7 +32,7 @@ public class SettlementVisualHandler: MonoBehaviour
             float randomYRotation = Random.Range(0f, 360f);
             Quaternion randomRot = Quaternion.Euler(0, randomYRotation, 0);
 
-            GameObject building = Instantiate(settlementBuildings.visuals[0], location, randomRot);
+            GameObject building = Instantiate(settlementBuildings.GetBuilding(), location, randomRot);
             
             SetVerticalHeight(building.transform);
 
