@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 
 /// <summary>
@@ -11,6 +12,9 @@ using UnityEngine;
 public class SettlementInstance : MonoBehaviour
 {
     public SettlementData settlementData;
+
+    public TextMesh cityName;
+
 
     [HideInInspector] public string name;
     [HideInInspector] public int population;

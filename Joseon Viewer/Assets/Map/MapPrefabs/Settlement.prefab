@@ -47,6 +47,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   settlementData: {fileID: 0}
+  cityName: {fileID: 0}
   name: 
   population: 0
 --- !u!114 &5676934993611353396
@@ -61,6 +62,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0440ecc69737c4678a87e811b60636dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  settlementBuildings: {fileID: 0}
+  clusterRadius: 3
+  clusterSpread: 1
+  isolatedRadius: 2
+  pointsPerCluster: 5
 --- !u!1 &7404191259876853271
 GameObject:
   m_ObjectHideFlags: 0
