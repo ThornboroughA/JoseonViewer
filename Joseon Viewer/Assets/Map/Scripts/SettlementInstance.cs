@@ -8,45 +8,47 @@ using TMPro;
 ///  This class handles the settlement data, visuals etc as handled on the map.
 /// </summary>
 
-[RequireComponent(typeof(SettlementVisualHandler))]
-public class SettlementInstance : MonoBehaviour
-{
-    public SettlementData settlementData;
-
-    public TextMesh cityName;
-
-
-    [HideInInspector] public string name;
-    [HideInInspector] public int population;
-
-
-    private void Start()
+namespace Map { 
+    [RequireComponent(typeof(SettlementVisualHandler))]
+    public class SettlementInstance : MonoBehaviour
     {
-        Initialize(settlementData);
+        public SettlementData settlementData;
 
-        InitializeVisuals();
-    }
+        public TextMesh cityName;
 
-    public void Initialize(SettlementData data)
-    {
-        if (data == null)
+
+        [HideInInspector] public string name;
+        [HideInInspector] public int population;
+
+
+        private void Start()
         {
-            Debug.LogWarning("SettlementData for " + this.name + " reads as null.");
-            return;
+            Initialize(settlementData);
+
+            InitializeVisuals();
         }
 
-        settlementData = data;
-        name = settlementData.name;
-        population = settlementData.population;
+        public void Initialize(SettlementData data)
+        {
+            if (data == null)
+            {
+                Debug.LogWarning("SettlementData for " + this.name + " reads as null.");
+                return;
+            }
 
-        string nameStart = "Settlement: ";
-        gameObject.name = nameStart + name;
+            settlementData = data;
+            name = settlementData.name;
+            population = settlementData.population;
+
+            string nameStart = "Settlement: ";
+            gameObject.name = nameStart + name;
+        }
+
+        private void InitializeVisuals()
+        {
+            GetComponent<SettlementVisualHandler>().GenerateBuildings(population);
+        }
+
+
     }
-
-    private void InitializeVisuals()
-    {
-        GetComponent<SettlementVisualHandler>().GenerateBuildings(population);
-    }
-
-
 }

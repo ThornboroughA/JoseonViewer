@@ -67,6 +67,7 @@ MonoBehaviour:
   clusterSpread: 1
   isolatedRadius: 2
   pointsPerCluster: 5
+  size: 0
 --- !u!1 &7404191259876853271
 GameObject:
   m_ObjectHideFlags: 0
@@ -84,7 +85,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6509223775138280241
 Transform:
   m_ObjectHideFlags: 0
